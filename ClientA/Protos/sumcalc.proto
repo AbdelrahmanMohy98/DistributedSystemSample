@@ -1,0 +1,22 @@
+syntax = "proto3";
+
+option csharp_namespace = "ClientA";
+
+package sumcalc;
+
+// The sum calculation service definition.
+service SumCalc {
+  // Calculates the sum of two numbers	
+  rpc CalculateSum (SumRequest) returns (SumReply);
+}
+
+// The request message containing the two numbers to su.
+message SumRequest {
+  double num1 = 1;
+  double num2 = 2;
+}
+
+// The response message containing the sum.
+message SumReply {
+  double result = 1;
+}
