@@ -1,4 +1,6 @@
 <Solution>
   <Project Path="ClientA/ClientA.csproj" />
   <Project Path="ServiceA/ServiceA.csproj" />
+  <Project Path="ServiceB/ServiceB.csproj" Id="fa8bd72f-1846-4458-9a53-0a8a51d3ea6c" />
+  <Project Path="Shared/Shared.csproj" Id="eebf1093-7db0-490e-b08e-059236085e0e" />
 </Solution>

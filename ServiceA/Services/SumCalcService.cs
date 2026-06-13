@@ -2,15 +2,20 @@ using Grpc.Core;
 
 namespace ServiceA.Services
 {
-    public class SumCalcService(ILogger<SumCalcService> logger) : SumCalc.SumCalcBase
+    public class SumCalcService(ILogger<SumCalcService> logger, IRabbitMQService _rabbitmqService) : SumCalc.SumCalcBase
     {
-        public override Task<SumReply> CalculateSum(SumRequest request, ServerCallContext context)
+
+        public override async Task<SumReply> CalculateSum(SumRequest request, ServerCallContext context)
         {
             logger.LogInformation("The sum is being calculated for {Num1} and {Num2}", request.Num1, request.Num2);
 
-            return Task.FromResult(new SumReply
+            double result = request.Num1 + request.Num2;
+
+            await _rabbitmqService.PublishAsync(result);
+
+            return await Task.FromResult(new SumReply
             {
-                Result = request.Num1 + request.Num2
+                Result = result
             });
         }
     }

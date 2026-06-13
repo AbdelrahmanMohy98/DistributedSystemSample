@@ -1,5 +1,8 @@
 
-namespace ClientA
+using ServiceB.Services;
+using Shared.Configurations;
+
+namespace ServiceB
 {
     public class Program
     {
@@ -13,6 +16,12 @@ namespace ClientA
 
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
+
+
+            var rabbitMqConfig = builder.Configuration.GetSection(nameof(RabbitMQConfiguration)).Get<RabbitMQConfiguration>();
+            builder.Services.AddSingleton(rabbitMqConfig);
+            builder.Services.AddHostedService<RabbitMqConsumer>();
+            builder.Services.AddSingleton<ITextFileService, TextFileService>();
 
             var app = builder.Build();
 

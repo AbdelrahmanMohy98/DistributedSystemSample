@@ -1,4 +1,5 @@
 using ServiceA.Services;
+using Shared.Configurations;
 
 namespace ServiceA
 {
@@ -10,6 +11,10 @@ namespace ServiceA
 
             // Add services to the container.
             builder.Services.AddGrpc();
+
+            var rabbitMqConfig = builder.Configuration.GetSection(nameof(RabbitMQConfiguration)).Get<RabbitMQConfiguration>();
+            builder.Services.AddSingleton(rabbitMqConfig);
+            builder.Services.AddScoped<IRabbitMQService, RabbitMQService>();
 
             var app = builder.Build();
 
